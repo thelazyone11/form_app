@@ -15,11 +15,13 @@ dependencies:
     sdk: flutter
 
   cupertino_icons: ^1.0.2
-  device_info_plus: 
+ 
   http: ^0.13.6
   image_picker: ^1.0.0
-  share: ^2.0.4
-  platform_device_id: ^1.0.1
+  shared_preferences: ^2.0.15
+  provider: ^6.0.4
+  geolocator: ^11.0.0
+  device_info_plus: 
 
 dev_dependencies:
   flutter_test:
