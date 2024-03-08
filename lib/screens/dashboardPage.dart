@@ -1,9 +1,13 @@
 import 'package:agent_form_app/models/login_response.dart';
 import 'package:agent_form_app/proivders/formDataProvider.dart';
+import 'package:agent_form_app/repos/auth_repo.dart';
 import 'package:agent_form_app/screens/form_page.dart';
+import 'package:agent_form_app/screens/loginPage.dart';
 import 'package:agent_form_app/screens/profileScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import '../widgets/loading_dailog.dart';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({
@@ -78,7 +82,9 @@ class _DashboardPageState extends State<DashboardPage> {
                       height: 30,
                     ),
                     InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        _logoutDialog();
+                      },
                       child: Container(
                         padding:
                             EdgeInsets.symmetric(horizontal: 10, vertical: 5),
@@ -106,6 +112,48 @@ class _DashboardPageState extends State<DashboardPage> {
                   ],
                 ),
               ));
-    // );
+  }
+
+  void _logoutDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext ccontext) {
+        return AlertDialog(
+          title: const Text('Confirmation'),
+          content: const Text('Are you sure you want to Logout?'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () async {
+                Navigator.of(ccontext).pop();
+                showLoaderDialog(context);
+
+                BoolMsgModel boolMsgModel = await AuthRepo().logout();
+
+                if (boolMsgModel.isDone) {
+                  Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(builder: (context) => LoginPage()),
+                      (route) => false);
+                } else {
+                  Navigator.of(context).pop();
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text("Failed!!..."),
+                      backgroundColor: Colors.red,
+                    ),
+                  );
+                }
+              },
+              child: const Text('Yes'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('No'),
+            ),
+          ],
+        );
+      },
+    );
   }
 }
