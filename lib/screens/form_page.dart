@@ -48,12 +48,17 @@ class _FormPageState extends State<FormPage> {
   @override
   void initState() {
     _determinePosition();
-    _selectedRaType = widget.loginResponse.data.data.raTypeLists[0];
-    _selectedInputType = widget.loginResponse.data.data.inputLists[0];
-    _selectedRentalClearedUpTo =
-        widget.loginResponse.data.data.rentalUptoLists[0];
-    _selectedRAColor = widget.loginResponse.data.data.raColorLists[0];
-    _selectedWDCode = widget.loginResponse.data.data.waCodeLists[0];
+    try {
+      _selectedRaType = widget.loginResponse.data.data.raTypeLists[0];
+      _selectedInputType = widget.loginResponse.data.data.inputLists[0];
+      _selectedRentalClearedUpTo =
+          widget.loginResponse.data.data.rentalUptoLists[0];
+      _selectedRAColor = widget.loginResponse.data.data.raColorLists[0];
+      _selectedWDCode = widget.loginResponse.data.data.waCodeLists[0];
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+
     super.initState();
   }
 
@@ -198,24 +203,25 @@ class _FormPageState extends State<FormPage> {
           key: _formKey,
           child: ListView(
             children: <Widget>[
-              DropdownButtonFormField<WaCodeLists>(
-                value: _selectedWDCode,
-                items: widget.loginResponse.data.data.waCodeLists
-                    .map((WaCodeLists value) {
-                  return DropdownMenuItem<WaCodeLists>(
-                    value: value,
-                    child: Text(value.wdCode),
-                  );
-                }).toList(),
-                onChanged: (WaCodeLists? newValue) {
-                  setState(() {
-                    _selectedWDCode = newValue!;
-                  });
-                },
-                decoration: const InputDecoration(
-                  labelText: 'WD Code',
+              if (widget.loginResponse.data.data.waCodeLists.isNotEmpty)
+                DropdownButtonFormField<WaCodeLists>(
+                  value: _selectedWDCode,
+                  items: widget.loginResponse.data.data.waCodeLists
+                      .map((WaCodeLists value) {
+                    return DropdownMenuItem<WaCodeLists>(
+                      value: value,
+                      child: Text(value.wdCode),
+                    );
+                  }).toList(),
+                  onChanged: (WaCodeLists? newValue) {
+                    setState(() {
+                      _selectedWDCode = newValue!;
+                    });
+                  },
+                  decoration: const InputDecoration(
+                    labelText: 'WD Code',
+                  ),
                 ),
-              ),
               const SizedBox(height: 16),
               TextFormField(
                 controller: _outletNameController,
@@ -274,62 +280,65 @@ class _FormPageState extends State<FormPage> {
                 ),
               ),
               const SizedBox(height: 16),
-              DropdownButtonFormField<String>(
-                value: _selectedRAColor,
-                items: widget.loginResponse.data.data.raColorLists
-                    .map((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value),
-                  );
-                }).toList(),
-                onChanged: (String? newValue) {
-                  setState(() {
-                    _selectedRAColor = newValue!;
-                  });
-                },
-                decoration: const InputDecoration(
-                  labelText: 'RA Color',
+              if (widget.loginResponse.data.data.raColorLists.isNotEmpty)
+                DropdownButtonFormField<String>(
+                  value: _selectedRAColor,
+                  items: widget.loginResponse.data.data.raColorLists
+                      .map((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      _selectedRAColor = newValue!;
+                    });
+                  },
+                  decoration: const InputDecoration(
+                    labelText: 'RA Color',
+                  ),
                 ),
-              ),
               const SizedBox(height: 16),
-              DropdownButtonFormField<String>(
-                value: _selectedRaType,
-                items: widget.loginResponse.data.data.raTypeLists
-                    .map((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value),
-                  );
-                }).toList(),
-                onChanged: (String? newValue) {
-                  setState(() {
-                    _selectedRaType = newValue!;
-                  });
-                },
-                decoration: const InputDecoration(
-                  labelText: 'RA Type',
+              if (widget.loginResponse.data.data.raTypeLists.isNotEmpty)
+                DropdownButtonFormField<String>(
+                  value: _selectedRaType,
+                  items: widget.loginResponse.data.data.raTypeLists
+                      .map((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      _selectedRaType = newValue!;
+                    });
+                  },
+                  decoration: const InputDecoration(
+                    labelText: 'RA Type',
+                  ),
                 ),
-              ),
               const SizedBox(height: 16),
-              DropdownButtonFormField<String>(
-                value: _selectedInputType,
-                items: widget.loginResponse.data.data.inputLists
-                    .map((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value),
-                  );
-                }).toList(),
-                onChanged: (String? newValue) {
-                  setState(() {
-                    _selectedInputType = newValue!;
-                  });
-                },
-                decoration: const InputDecoration(
-                  labelText: 'Input Type',
+              if (widget.loginResponse.data.data.inputLists.isNotEmpty)
+                DropdownButtonFormField<String>(
+                  value: _selectedInputType,
+                  items: widget.loginResponse.data.data.inputLists
+                      .map((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      _selectedInputType = newValue!;
+                    });
+                  },
+                  decoration: const InputDecoration(
+                    labelText: 'Input Type',
+                  ),
                 ),
-              ),
               const SizedBox(height: 16),
               TextFormField(
                 controller: _rentalAmountController,
@@ -343,24 +352,25 @@ class _FormPageState extends State<FormPage> {
                 },
               ),
               const SizedBox(height: 16),
-              DropdownButtonFormField<String>(
-                value: _selectedRentalClearedUpTo,
-                items: widget.loginResponse.data.data.rentalUptoLists
-                    .map((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value),
-                  );
-                }).toList(),
-                onChanged: (String? newValue) {
-                  setState(() {
-                    _selectedRentalClearedUpTo = newValue!;
-                  });
-                },
-                decoration: const InputDecoration(
-                  labelText: 'Rental Cleared Up to',
+              if (widget.loginResponse.data.data.rentalUptoLists.isNotEmpty)
+                DropdownButtonFormField<String>(
+                  value: _selectedRentalClearedUpTo,
+                  items: widget.loginResponse.data.data.rentalUptoLists
+                      .map((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      _selectedRentalClearedUpTo = newValue!;
+                    });
+                  },
+                  decoration: const InputDecoration(
+                    labelText: 'Rental Cleared Up to',
+                  ),
                 ),
-              ),
               TextFormField(
                 controller: _remarkController,
                 decoration: const InputDecoration(

@@ -42,8 +42,8 @@ class LoginResponseData {
 
   factory LoginResponseData.fromJson(Map<String, dynamic> json) =>
       LoginResponseData(
-        status: json["status"],
-        message: json["message"],
+        status: json["status"] ?? "",
+        message: json["message"] ?? "",
         data: DataData.fromJson(json["data"]),
       );
 
@@ -82,20 +82,30 @@ class DataData {
   });
 
   factory DataData.fromJson(Map<String, dynamic> json) => DataData(
-        name: json["name"],
-        mobileNumber: json["mobile_number"],
-        role: json["role"],
-        deviceDetails: json["device_details"],
-        token: json["token"],
-        waCodeLists: List<WaCodeLists>.from(
-            json["wa_code_lists"].map((x) => WaCodeLists.fromJson(x))),
-        raColorLists: List<String>.from(json["ra_color_lists"].map((x) => x)),
-        raTypeLists: List<String>.from(json["ra_type_lists"].map((x) => x)),
-        inputLists: List<String>.from(json["input_lists"].map((x) => x)),
-        rentalPaidLists:
-            List<String>.from(json["rental_paid_lists"].map((x) => x)),
-        rentalUptoLists:
-            List<String>.from(json["rental_upto_lists"].map((x) => x)),
+        name: json["name"] ?? "",
+        mobileNumber: json["mobile_number"] ?? "",
+        role: json["role"] ?? "",
+        deviceDetails: json["device_details"] ?? "",
+        token: json["token"] ?? "",
+        waCodeLists: json["wa_code_lists"] == null
+            ? []
+            : List<WaCodeLists>.from(
+                json["wa_code_lists"].map((x) => WaCodeLists.fromJson(x))),
+        raColorLists: json["ra_color_lists"] == null
+            ? []
+            : List<String>.from(json["ra_color_lists"].map((x) => x)),
+        raTypeLists: json["ra_type_lists"] == null
+            ? []
+            : List<String>.from(json["ra_type_lists"].map((x) => x)),
+        inputLists: json["input_lists"] == null
+            ? []
+            : List<String>.from(json["input_lists"].map((x) => x)),
+        rentalPaidLists: json["rental_paid_lists"] == null
+            ? []
+            : List<String>.from(json["rental_paid_lists"].map((x) => x)),
+        rentalUptoLists: json["rental_upto_lists"] == null
+            ? []
+            : List<String>.from(json["rental_upto_lists"].map((x) => x)),
       );
 
   Map<String, dynamic> toJson() => {
@@ -135,14 +145,14 @@ class WaCodeLists {
   });
 
   factory WaCodeLists.fromJson(Map<String, dynamic> json) => WaCodeLists(
-        id: json["id"],
-        circle: json["circle"],
-        section: json["section"],
-        wdCode: json["wd_code"],
-        amName: json["am_name"],
-        amMobileNo: json["am_mobile_no"],
-        aeName: json["ae_name"],
-        aeMobileNo: json["ae_mobile_no"],
+        id: json["id"] ?? "",
+        circle: json["circle"] ?? "",
+        section: json["section"] ?? "",
+        wdCode: json["wd_code"] ?? "",
+        amName: json["am_name"] ?? "",
+        amMobileNo: json["am_mobile_no"] ?? "",
+        aeName: json["ae_name"] ?? "",
+        aeMobileNo: json["ae_mobile_no"] ?? "",
       );
 
   Map<String, dynamic> toJson() => {

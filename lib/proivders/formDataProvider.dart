@@ -9,7 +9,9 @@ class FormDataProvider extends ChangeNotifier {
 
   getData() async {
     isLoading = true;
-    loginResponse = await getLoginRespose();
+    try {
+      loginResponse = await getLoginRespose();
+    } catch (e) {}
 
     isLoading = false;
     notifyListeners();
